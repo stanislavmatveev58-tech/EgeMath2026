@@ -139,16 +139,16 @@
     <main>
         <div class="container">
             <div id="test-container">
-                <!-- Здесь будет динамически отображаться интерфейс теста -->
+                
             </div>
         </div>
     </main>
     <footer>
-        <p>© 2025 Подготовка к ЕГЭ</p>
+        <p>© 2026 Подготовка к ЕГЭ</p>
     </footer>
 
     <script>
-        // Данные теста (из бота)
+        
         const testData = [
             {
                 question: "Стороны параллелограмма равны 18 и 20. Высота, опущенная на меньшую из этих сторон, равна 10. Найдите длину высоты, опущенной на большую сторону параллелограмма.",
@@ -228,14 +228,14 @@
         let testState = {
             currentIndex: 0,
             correctAnswers: 0,
-            answers: [],      // массив объектов { userAnswer, correct, solutionShown? }
-            wrongQuestions: [], // индексы ошибочных вопросов (для повтора)
+            answers: [],      
+            wrongQuestions: [], 
             isRetryMode: false,
-            retryData: null    // массив вопросов для повтора
+            retryData: null    
         };
 
         function normalizeAnswer(ans) {
-            // Приводим к строке, убираем пробелы, заменяем запятую на точку
+            
             let str = String(ans).trim().toLowerCase();
             str = str.replace(',', '.');
             return str;
