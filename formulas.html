@@ -5,6 +5,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Формулы | ЕГЭ Математика</title>
     <style>
+        :root {
+            --bg: #f0f7ff;
+            --card-bg: #ffffff;
+            --text: #1e2a3a;
+            --text-secondary: #555;
+            --header-bg: #2c3e50;
+            --header-text: #ffffff;
+            --accent: #3498db;
+            --shadow: 0 2px 4px rgba(0,0,0,0.1);
+            --formula-bg: #f8f9fa;
+            --formula-border: #e9ecef;
+            --card-border: #3498db;
+            --footer-bg: #2c3e50;
+            --footer-text: #ffffff;
+        }
+        
+        .dark-theme {
+            --bg: #1a1a2e;
+            --card-bg: #16213e;
+            --text: #e0e0e0;
+            --text-secondary: #b0b0b0;
+            --header-bg: #0f3460;
+            --header-text: #ffffff;
+            --accent: #e94560;
+            --shadow: 0 2px 4px rgba(0,0,0,0.3);
+            --formula-bg: #1a1a2e;
+            --formula-border: #333;
+            --card-border: #e94560;
+            --footer-bg: #0f3460;
+            --footer-text: #e0e0e0;
+        }
+        
         * {
             margin: 0;
             padding: 0;
@@ -12,34 +44,54 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         body {
-            background: #f0f7ff;
-            color: #1e2a3a;
+            background: var(--bg);
+            color: var(--text);
             line-height: 1.6;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
+            transition: background 0.3s, color 0.3s;
         }
         header {
-            background: #2c3e50;
-            color: white;
+            background: var(--header-bg);
+            color: var(--header-text);
             padding: 1rem 2rem;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
         }
         nav ul {
             display: flex;
-            justify-content: center;
+            justify-content: flex-start;
             list-style: none;
             gap: 2rem;
             flex-wrap: wrap;
         }
         nav a {
-            color: white;
+            color: var(--header-text);
             text-decoration: none;
             font-weight: bold;
             transition: color 0.3s;
         }
         nav a:hover {
             color: #f1c40f;
+        }
+        .theme-toggle {
+            background: transparent;
+            border: 2px solid var(--header-text);
+            color: var(--header-text);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        .theme-toggle:hover {
+            background: var(--header-text);
+            color: var(--header-bg);
         }
         main {
             flex: 1;
@@ -50,18 +102,27 @@
             margin: 0 auto;
         }
         h1 {
-            text-align: center;
+            text-align: left;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+        .subtitle {
+            text-align: left;
             margin-bottom: 2rem;
-            color: #2c3e50;
+            color: var(--text-secondary);
         }
         .formula-category {
-            margin-bottom: 2rem;
+            margin-bottom: 3rem;
         }
         .formula-category h2 {
-            color: #2c3e50;
-            border-bottom: 2px solid #3498db;
+            color: var(--text);
+            border-bottom: 3px solid var(--accent);
             padding-bottom: 0.5rem;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-align: left;
         }
         .formula-grid {
             display: grid;
@@ -69,43 +130,59 @@
             gap: 1.5rem;
         }
         .formula-card {
-            background: white;
-            border-radius: 8px;
-            padding: 1rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            transition: transform 0.2s;
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.2rem;
+            box-shadow: var(--shadow);
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            border-left: 4px solid var(--card-border);
+            text-align: left;
         }
         .formula-card:hover {
-            transform: translateY(-3px);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
         }
         .formula-card h3 {
-            color: #2c3e50;
+            color: var(--text);
             margin-bottom: 0.5rem;
             font-size: 1.1rem;
-        }
-        .formula-card p {
-            color: #555;
-            font-size: 0.9rem;
-            margin-top: 0.5rem;
+            text-align: left;
         }
         .formula-text {
-            font-family: monospace;
-            background: #f4f4f4;
-            padding: 0.5rem;
-            border-radius: 5px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            background: var(--formula-bg);
+            padding: 0.8rem;
+            border-radius: 8px;
             margin-top: 0.5rem;
             font-size: 0.9rem;
             overflow-x: auto;
+            line-height: 1.8;
+            border: 1px solid var(--formula-border);
+            text-align: left;
         }
         footer {
             text-align: center;
             padding: 1rem;
-            background: #2c3e50;
-            color: white;
+            background: var(--footer-bg);
+            color: var(--footer-text);
             margin-top: 2rem;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--header-bg);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent);
         }
         @media (max-width: 768px) {
             .formula-grid { grid-template-columns: 1fr; }
+            .formula-card { padding: 1rem; }
         }
     </style>
 </head>
@@ -119,10 +196,12 @@
                 <li><a href="thanks.html">Обратная связь</a></li>
             </ul>
         </nav>
+        <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">🌙 Тёмная тема</button>
     </header>
     <main>
         <div class="container">
-            <h1>Формулы по разделам</h1>
+            <h1>📖 Полный справочник формул</h1>
+            <p class="subtitle">Все формулы структурированы по разделам для удобной навигации</p>
             
             <!-- Алгебра -->
             <div class="formula-category">
@@ -144,7 +223,8 @@
                         <h3>Арифметическая прогрессия</h3>
                         <div class="formula-text">
                             aₙ = a₁ + (n−1)d<br>
-                            Sₙ = (a₁ + aₙ)·n / 2 = (2a₁ + (n−1)d)·n / 2
+                            Sₙ = (a₁ + aₙ)·n / 2 = (2a₁ + (n−1)d)·n / 2<br>
+                            Характеристическое свойство: aₙ = (aₙ₋₁ + aₙ₊₁)/2
                         </div>
                     </div>
                     <div class="formula-card">
@@ -152,28 +232,30 @@
                         <div class="formula-text">
                             bₙ = b₁·qⁿ⁻¹<br>
                             Sₙ = b₁·(qⁿ − 1)/(q − 1), q ≠ 1<br>
-                            Сумма бесконечной убывающей: S = b₁/(1−q), |q|<1
+                            Сумма бесконечной убывающей: S = b₁/(1−q), |q|&lt;1<br>
+                            Характеристическое свойство: bₙ² = bₙ₋₁·bₙ₊₁
                         </div>
                     </div>
                     <div class="formula-card">
                         <h3>Свойства степеней</h3>
                         <div class="formula-text">
                             aᵐ·aⁿ = aᵐ⁺ⁿ<br>
-                            aᵐ / aⁿ = aᵐ⁻ⁿ<br>
+                            aᵐ / aⁿ = aᵐ⁻ⁿ, a ≠ 0<br>
                             (aᵐ)ⁿ = aᵐⁿ<br>
                             (ab)ⁿ = aⁿ·bⁿ<br>
-                            (a/b)ⁿ = aⁿ / bⁿ<br>
-                            a⁰ = 1, a⁻ⁿ = 1/aⁿ
+                            (a/b)ⁿ = aⁿ / bⁿ, b ≠ 0<br>
+                            a⁰ = 1, a ≠ 0<br>
+                            a⁻ⁿ = 1/aⁿ, a ≠ 0
                         </div>
                     </div>
                     <div class="formula-card">
                         <h3>Свойства корней</h3>
                         <div class="formula-text">
-                            √(ab) = √a·√b<br>
-                            √(a/b) = √a / √b<br>
-                            (√a)² = a<br>
+                            √(ab) = √a·√b, a,b ≥ 0<br>
+                            √(a/b) = √a / √b, a ≥ 0, b > 0<br>
+                            (√a)² = a, a ≥ 0<br>
                             √(a²) = |a|<br>
-                            ⁿ√(aᵐ) = aᵐ⁄ⁿ
+                            ⁿ√(aᵐ) = aᵐ⁄ⁿ, a ≥ 0
                         </div>
                     </div>
                     <div class="formula-card">
@@ -182,9 +264,9 @@
                             logₐ(xy) = logₐx + logₐy<br>
                             logₐ(x/y) = logₐx − logₐy<br>
                             logₐxᵏ = k·logₐx<br>
-                            logₐb = 1 / log_b a<br>
-                            logₐb = log_c b / log_c a<br>
-                            a^(logₐb) = b
+                            logₐb = log_c b / log_c a (формула перехода)<br>
+                            a^(logₐb) = b (основное тождество)<br>
+                            logₐa = 1, logₐ1 = 0
                         </div>
                     </div>
                     <div class="formula-card">
@@ -192,7 +274,10 @@
                         <div class="formula-text">
                             ax² + bx + c = 0<br>
                             D = b² − 4ac<br>
-                            x₁₂ = (−b ± √D) / (2a)<br>
+                            x₁,₂ = (−b ± √D) / (2a)<br>
+                            Если D > 0: два корня<br>
+                            Если D = 0: один корень<br>
+                            Если D < 0: нет корней<br>
                             Теорема Виета: x₁ + x₂ = −b/a, x₁·x₂ = c/a
                         </div>
                     </div>
@@ -201,21 +286,24 @@
                         <div class="formula-text">
                             ax² + bx + c = a(x − x₁)(x − x₂)<br>
                             Вынесение общего множителя<br>
-                            Группировка<br>
+                            Метод группировки<br>
                             Использование ФСУ
                         </div>
                     </div>
                     <div class="formula-card">
-                        <h3>Таблица квадратов</h3>
+                        <h3>Таблица квадратов (1-20)</h3>
                         <div class="formula-text">
-                            1²=1, 2²=4, 3²=9, 4²=16, 5²=25, 6²=36, 7²=49, 8²=64, 9²=81, 10²=100,<br>
-                            11²=121, 12²=144, 13²=169, 14²=196, 15²=225, 16²=256, 17²=289, 18²=324, 19²=361, 20²=400
+                            1²=1, 2²=4, 3²=9, 4²=16, 5²=25<br>
+                            6²=36, 7²=49, 8²=64, 9²=81, 10²=100<br>
+                            11²=121, 12²=144, 13²=169, 14²=196, 15²=225<br>
+                            16²=256, 17²=289, 18²=324, 19²=361, 20²=400
                         </div>
                     </div>
                     <div class="formula-card">
                         <h3>Таблица степеней</h3>
                         <div class="formula-text">
-                            2¹=2, 2²=4, 2³=8, 2⁴=16, 2⁵=32, 2⁶=64, 2⁷=128, 2⁸=256, 2⁹=512, 2¹⁰=1024<br>
+                            2¹=2, 2²=4, 2³=8, 2⁴=16, 2⁵=32<br>
+                            2⁶=64, 2⁷=128, 2⁸=256, 2⁹=512, 2¹⁰=1024<br>
                             3¹=3, 3²=9, 3³=27, 3⁴=81, 3⁵=243, 3⁶=729<br>
                             5²=25, 5³=125, 5⁴=625<br>
                             10²=100, 10³=1000
@@ -231,23 +319,25 @@
                     <div class="formula-card">
                         <h3>Площадь треугольника</h3>
                         <div class="formula-text">
-                            S = ½·a·hₐ<br>
-                            S = ½·ab·sin γ<br>
-                            S = √(p(p−a)(p−b)(p−c)) (Герон)<br>
-                            S = abc/(4R)<br>
-                            S = pr
+                            S = ½·a·hₐ (через основание и высоту)<br>
+                            S = ½·ab·sin γ (через две стороны и угол)<br>
+                            S = √(p(p−a)(p−b)(p−c)) (формула Герона)<br>
+                            S = abc/(4R) (через радиус описанной окружности)<br>
+                            S = pr (через радиус вписанной окружности)
                         </div>
                     </div>
                     <div class="formula-card">
                         <h3>Теорема синусов</h3>
                         <div class="formula-text">
-                            a/sin A = b/sin B = c/sin C = 2R
+                            a/sin A = b/sin B = c/sin C = 2R<br>
+                            где R — радиус описанной окружности
                         </div>
                     </div>
                     <div class="formula-card">
                         <h3>Теорема косинусов</h3>
                         <div class="formula-text">
-                            a² = b² + c² − 2bc·cos A
+                            a² = b² + c² − 2bc·cos A<br>
+                            Используется для нахождения стороны или угла
                         </div>
                     </div>
                     <div class="formula-card">
@@ -255,16 +345,18 @@
                         <div class="formula-text">
                             Теорема Пифагора: a² + b² = c²<br>
                             Высота из прямого угла: h² = a₁·b₁<br>
-                            Радиус вписанной: r = (a+b−c)/2<br>
-                            Площадь: S = ab/2
+                            Радиус вписанной окружности: r = (a+b−c)/2<br>
+                            Площадь: S = ab/2<br>
+                            Медиана к гипотенузе: m = c/2
                         </div>
                     </div>
                     <div class="formula-card">
                         <h3>Равносторонний треугольник</h3>
                         <div class="formula-text">
-                            h = a√3/2<br>
-                            S = a²√3/4<br>
-                            R = a√3/3, r = a√3/6
+                            Высота: h = a√3/2<br>
+                            Площадь: S = a²√3/4<br>
+                            R = a√3/3 (описанная окружность)<br>
+                            r = a√3/6 (вписанная окружность)
                         </div>
                     </div>
                     <div class="formula-card">
@@ -274,7 +366,7 @@
                             Квадрат: S = a², d = a√2<br>
                             Параллелограмм: S = a·hₐ = ab·sin α<br>
                             Ромб: S = a·h = ½·d₁·d₂<br>
-                            Трапеция: S = (a+b)/2 · h, средняя линия = (a+b)/2
+                            Трапеция: S = (a+b)/2 · h
                         </div>
                     </div>
                     <div class="formula-card">
@@ -289,13 +381,16 @@
                     <div class="formula-card">
                         <h3>Длина биссектрисы</h3>
                         <div class="formula-text">
-                            l = (2ab·cos(γ/2))/(a+b) или l = √(ab − a₁b₁), где a₁,b₁ — отрезки стороны
+                            l = (2ab·cos(γ/2))/(a+b)<br>
+                            или l = √(ab − a₁b₁),<br>
+                            где a₁, b₁ — отрезки стороны
                         </div>
                     </div>
                     <div class="formula-card">
                         <h3>Длина медианы</h3>
                         <div class="formula-text">
-                            mₐ = ½√(2b² + 2c² − a²)
+                            mₐ = ½√(2b² + 2c² − a²)<br>
+                            Медиана делит сторону пополам
                         </div>
                     </div>
                 </div>
@@ -308,24 +403,27 @@
                     <div class="formula-card">
                         <h3>Куб, призма, параллелепипед</h3>
                         <div class="formula-text">
-                            V = Sосн·h<br>
+                            Объём призмы: V = Sосн·h<br>
                             Прямоугольный параллелепипед: V = abc<br>
-                            Куб: V = a³, S = 6a²<br>
+                            Куб: V = a³, Sпов = 6a²<br>
                             Призма: Sполн = Sбок + 2Sосн
                         </div>
                     </div>
                     <div class="formula-card">
                         <h3>Цилиндр и конус</h3>
                         <div class="formula-text">
-                            Цилиндр: V = πR²h, Sбок = 2πRh, Sполн = 2πR(R+h)<br>
-                            Конус: V = ⅓πR²h, Sбок = πRl, где l = √(R²+h²)
+                            Цилиндр: V = πR²h<br>
+                            Sбок = 2πRh, Sполн = 2πR(R+h)<br>
+                            Конус: V = ⅓πR²h<br>
+                            Sбок = πRl, где l = √(R²+h²)
                         </div>
                     </div>
                     <div class="formula-card">
                         <h3>Пирамида и шар</h3>
                         <div class="formula-text">
                             Пирамида: V = ⅓Sосн·h<br>
-                            Шар: V = ⁴⁄₃πR³, S = 4πR²
+                            Шар: V = ⁴⁄₃πR³<br>
+                            Площадь поверхности шара: S = 4πR²
                         </div>
                     </div>
                 </div>
@@ -339,8 +437,11 @@
                         <h3>Основные тождества</h3>
                         <div class="formula-text">
                             sin²α + cos²α = 1<br>
-                            tgα = sinα/cosα, ctgα = cosα/sinα<br>
-                            1 + tg²α = 1/cos²α, 1 + ctg²α = 1/sin²α
+                            tgα = sinα/cosα<br>
+                            ctgα = cosα/sinα<br>
+                            tgα·ctgα = 1<br>
+                            1 + tg²α = 1/cos²α<br>
+                            1 + ctg²α = 1/sin²α
                         </div>
                     </div>
                     <div class="formula-card">
@@ -355,16 +456,18 @@
                         <h3>Формулы двойного угла</h3>
                         <div class="formula-text">
                             sin2α = 2sinα·cosα<br>
-                            cos2α = cos²α − sin²α = 2cos²α − 1 = 1 − 2sin²α<br>
+                            cos2α = cos²α − sin²α<br>
+                            cos2α = 2cos²α − 1<br>
+                            cos2α = 1 − 2sin²α<br>
                             tg2α = 2tgα/(1−tg²α)
                         </div>
                     </div>
                     <div class="formula-card">
-                        <h3>Преобразование суммы в произведение</h3>
+                        <h3>Сумма в произведение</h3>
                         <div class="formula-text">
                             sinα + sinβ = 2sin((α+β)/2)·cos((α−β)/2)<br>
-                            cosα + cosβ = 2cos((α+β)/2)·cos((α−β)/2)<br>
                             sinα − sinβ = 2cos((α+β)/2)·sin((α−β)/2)<br>
+                            cosα + cosβ = 2cos((α+β)/2)·cos((α−β)/2)<br>
                             cosα − cosβ = −2sin((α+β)/2)·sin((α−β)/2)
                         </div>
                     </div>
@@ -375,7 +478,7 @@
                             30°: sin=½, cos=√3/2, tg=√3/3<br>
                             45°: sin=√2/2, cos=√2/2, tg=1<br>
                             60°: sin=√3/2, cos=½, tg=√3<br>
-                            90°: sin=1, cos=0, tg не определён
+                            90°: sin=1, cos=0, tg не опр.
                         </div>
                     </div>
                 </div>
@@ -383,15 +486,15 @@
             
             <!-- Вероятность -->
             <div class="formula-category">
-                <h2>🎲 Вероятность</h2>
+                <h2>🎲 Теория вероятностей</h2>
                 <div class="formula-grid">
                     <div class="formula-card">
-                        <h3>Основные понятия</h3>
+                        <h3>Основные формулы</h3>
                         <div class="formula-text">
                             P(A) = m/n (классическая вероятность)<br>
                             P(A) + P(¬A) = 1<br>
                             P(A∪B) = P(A) + P(B) − P(A∩B)<br>
-                            Для независимых: P(A∩B) = P(A)·P(B)<br>
+                            P(A∩B) = P(A)·P(B) (для независимых)<br>
                             Формула Бернулли: Pₙ(k) = Cₙᵏ·pᵏ·qⁿ⁻ᵏ
                         </div>
                     </div>
@@ -400,7 +503,7 @@
             
             <!-- Производные -->
             <div class="formula-category">
-                <h2>📈 Производные</h2>
+                <h2>📈 Производные и интегралы</h2>
                 <div class="formula-grid">
                     <div class="formula-card">
                         <h3>Правила дифференцирования</h3>
@@ -413,7 +516,6 @@
                             (sin x)' = cos x<br>
                             (cos x)' = −sin x<br>
                             (tg x)' = 1/cos²x<br>
-                            (ctg x)' = −1/sin²x<br>
                             (eˣ)' = eˣ<br>
                             (aˣ)' = aˣ·ln a<br>
                             (ln x)' = 1/x
@@ -422,7 +524,7 @@
                     <div class="formula-card">
                         <h3>Первообразные</h3>
                         <div class="formula-text">
-                            ∫xⁿ dx = xⁿ⁺¹/(n+1) + C, n ≠ -1<br>
+                            ∫xⁿ dx = xⁿ⁺¹/(n+1) + C, n ≠ −1<br>
                             ∫1/x dx = ln|x| + C<br>
                             ∫sin x dx = −cos x + C<br>
                             ∫cos x dx = sin x + C<br>
@@ -435,17 +537,17 @@
             
             <!-- Графики -->
             <div class="formula-category">
-                <h2>📊 Графики</h2>
+                <h2>📊 Графики функций</h2>
                 <div class="formula-grid">
                     <div class="formula-card">
                         <h3>Основные функции</h3>
                         <div class="formula-text">
-                            Линейная: y = kx + b (прямая)<br>
-                            Квадратичная: y = ax² + bx + c (парабола)<br>
+                            Линейная: y = kx + b<br>
+                            Квадратичная: y = ax² + bx + c<br>
                             Степенная: y = xⁿ<br>
                             Показательная: y = aˣ<br>
                             Логарифмическая: y = logₐx<br>
-                            Тригонометрические: y = sin x, y = cos x, y = tg x<br>
+                            Тригонометрические: y = sin x, cos x, tg x<br>
                             Преобразования: сдвиг, растяжение, отражение
                         </div>
                     </div>
@@ -454,7 +556,38 @@
         </div>
     </main>
     <footer>
-        <p>© 2026 Подготовка к ЕГЭ</p>
+        <p>© 2026 Подготовка к ЕГЭ. Все материалы для некоммерческого использования.</p>
     </footer>
+
+    <script>
+        // Ночная тема
+        function toggleTheme() {
+            document.body.classList.toggle('dark-theme');
+            const isDark = document.body.classList.contains('dark-theme');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            updateThemeButton(isDark);
+        }
+        
+        function updateThemeButton(isDark) {
+            const btn = document.getElementById('themeToggle');
+            if (isDark) {
+                btn.textContent = '☀️ Светлая тема';
+            } else {
+                btn.textContent = '🌙 Тёмная тема';
+            }
+        }
+        
+        function applySavedTheme() {
+            const saved = localStorage.getItem('theme');
+            if (saved === 'dark') {
+                document.body.classList.add('dark-theme');
+                updateThemeButton(true);
+            } else {
+                updateThemeButton(false);
+            }
+        }
+        
+        applySavedTheme();
+    </script>
 </body>
 </html>
