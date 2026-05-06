@@ -5,6 +5,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Тест | ЕГЭ Математика</title>
     <style>
+        :root {
+            --bg: #f0f7ff;
+            --card-bg: #ffffff;
+            --text: #1e2a3a;
+            --text-secondary: #555;
+            --header-bg: #2c3e50;
+            --header-text: #ffffff;
+            --accent: #3498db;
+            --accent-hover: #2980b9;
+            --red: #e63946;
+            --red-hover: #b91c2c;
+            --green: #2ecc71;
+            --green-hover: #27ae60;
+            --orange: #f39c12;
+            --shadow: 0 2px 5px rgba(0,0,0,0.1);
+            --input-border: #ccc;
+            --footer-bg: #2c3e50;
+            --footer-text: #ffffff;
+            --solution-bg: #eef2f7;
+            --hint-bg: #fff8e1;
+            --hint-border: #f39c12;
+            --university-bg: #e8f4fd;
+        }
+        
+        .dark-theme {
+            --bg: #1a1a2e;
+            --card-bg: #16213e;
+            --text: #e0e0e0;
+            --text-secondary: #b0b0b0;
+            --header-bg: #0f3460;
+            --header-text: #ffffff;
+            --accent: #e94560;
+            --accent-hover: #c23152;
+            --red: #e94560;
+            --red-hover: #c23152;
+            --green: #2ecc71;
+            --green-hover: #27ae60;
+            --orange: #f39c12;
+            --shadow: 0 2px 5px rgba(0,0,0,0.3);
+            --input-border: #444;
+            --footer-bg: #0f3460;
+            --footer-text: #e0e0e0;
+            --solution-bg: #1a1a2e;
+            --hint-bg: #2c2416;
+            --hint-border: #f39c12;
+            --university-bg: #16213e;
+        }
+        
         * {
             margin: 0;
             padding: 0;
@@ -12,18 +60,24 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         body {
-            background: #f0f7ff;
-            color: #1e2a3a;
+            background: var(--bg);
+            color: var(--text);
             line-height: 1.6;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
+            transition: background 0.3s, color 0.3s;
         }
         header {
-            background: #2c3e50;
-            color: white;
+            background: var(--header-bg);
+            color: var(--header-text);
             padding: 1rem 2rem;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: var(--shadow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
         }
         nav ul {
             display: flex;
@@ -33,13 +87,27 @@
             flex-wrap: wrap;
         }
         nav a {
-            color: white;
+            color: var(--header-text);
             text-decoration: none;
             font-weight: bold;
             transition: color 0.3s;
         }
         nav a:hover {
             color: #f1c40f;
+        }
+        .theme-toggle {
+            background: transparent;
+            border: 2px solid var(--header-text);
+            color: var(--header-text);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        .theme-toggle:hover {
+            background: var(--header-text);
+            color: var(--header-bg);
         }
         main {
             flex: 1;
@@ -50,12 +118,12 @@
             margin: 0 auto;
         }
         .difficulty-selector {
-            background: white;
+            background: var(--card-bg);
             border-radius: 12px;
             padding: 1.5rem;
             margin-bottom: 2rem;
             text-align: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: var(--shadow);
         }
         .difficulty-buttons {
             display: flex;
@@ -74,27 +142,30 @@
             font-weight: bold;
         }
         .difficulty-btn.easy {
-            background: #2ecc71;
+            background: var(--green);
             color: white;
         }
         .difficulty-btn.medium {
-            background: #f39c12;
+            background: var(--orange);
             color: white;
         }
         .difficulty-btn.hard {
-            background: #e74c3c;
+            background: var(--red);
             color: white;
         }
         .difficulty-btn.active {
             transform: scale(1.05);
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
+        .difficulty-btn:hover {
+            opacity: 0.9;
+        }
         .question-card {
-            background: white;
+            background: var(--card-bg);
             border-radius: 12px;
             padding: 1.5rem;
             margin-bottom: 1rem;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: var(--shadow);
         }
         .question-text {
             font-size: 1.2rem;
@@ -109,90 +180,142 @@
             width: 100%;
             padding: 0.8rem;
             margin: 1rem 0;
-            border: 1px solid #ccc;
+            border: 2px solid var(--input-border);
             border-radius: 5px;
             font-size: 1rem;
+            transition: border-color 0.3s;
+            background: var(--card-bg);
+            color: var(--text);
+        }
+        .answer-input:focus {
+            border-color: var(--accent);
+            outline: none;
         }
         .button-group {
             display: flex;
             gap: 1rem;
             flex-wrap: wrap;
             margin-top: 1rem;
+            align-items: center;
         }
         button {
-            background: #3498db;
+            background: var(--accent);
             color: white;
             border: none;
             padding: 0.6rem 1.2rem;
             border-radius: 5px;
             cursor: pointer;
             transition: background 0.3s;
+            font-size: 1rem;
         }
         button:hover {
-            background: #2980b9;
+            background: var(--accent-hover);
+        }
+        button:disabled {
+            background: #95a5a6;
+            cursor: not-allowed;
         }
         .btn-danger {
-            background: #e63946;
+            background: var(--red);
         }
         .btn-danger:hover {
-            background: #b91c2c;
+            background: var(--red-hover);
         }
         .btn-success {
-            background: #2ecc71;
+            background: var(--green);
         }
         .btn-success:hover {
-            background: #27ae60;
+            background: var(--green-hover);
+        }
+        .btn-hint {
+            background: var(--orange);
+        }
+        .btn-hint:hover {
+            background: #e67e22;
         }
         .solution {
-            background: #eef2f7;
+            background: var(--solution-bg);
             padding: 1rem;
             border-radius: 8px;
             margin-top: 1rem;
-            border-left: 4px solid #e63946;
+            border-left: 4px solid var(--red);
+        }
+        .hint-box {
+            background: var(--hint-bg);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            border-left: 4px solid var(--hint-border);
+        }
+        .hint-level {
+            font-weight: bold;
+            color: var(--orange);
+            margin-bottom: 0.5rem;
+        }
+        .hint-text {
+            color: var(--text);
         }
         .result {
             text-align: center;
             margin-top: 2rem;
         }
         .result-card {
-            background: white;
+            background: var(--card-bg);
             border-radius: 12px;
             padding: 1.5rem;
             margin-bottom: 1rem;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: var(--shadow);
         }
         .universities {
-            background: #e8f4fd;
+            background: var(--university-bg);
             border-radius: 12px;
             padding: 1rem;
             margin-top: 1rem;
             text-align: left;
         }
         .universities h4 {
-            color: #2c3e50;
+            color: var(--text);
             margin-bottom: 0.5rem;
         }
         .university {
             padding: 0.5rem;
             margin: 0.5rem 0;
-            border-left: 3px solid #e63946;
-            background: white;
+            border-left: 3px solid var(--red);
+            background: var(--card-bg);
             border-radius: 6px;
+            transition: transform 0.2s;
+        }
+        .university:hover {
+            transform: translateX(5px);
         }
         footer {
             text-align: center;
             padding: 1rem;
-            background: #2c3e50;
-            color: white;
+            background: var(--footer-bg);
+            color: var(--footer-text);
             margin-top: 2rem;
         }
         .feedback-correct {
-            color: green;
+            color: #27ae60;
             font-weight: bold;
+            font-size: 1.1rem;
         }
         .feedback-wrong {
-            color: red;
+            color: #e74c3c;
             font-weight: bold;
+            font-size: 1.1rem;
+        }
+        .hint-count {
+            display: inline-block;
+            background: var(--orange);
+            color: white;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            text-align: center;
+            line-height: 24px;
+            font-size: 0.8rem;
+            margin-left: 5px;
         }
         @media (max-width: 768px) {
             .difficulty-buttons { gap: 0.5rem; }
@@ -210,6 +333,7 @@
                 <li><a href="thanks.html">Обратная связь</a></li>
             </ul>
         </nav>
+        <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">🌙 Тёмная тема</button>
     </header>
     <main>
         <div class="container">
@@ -231,49 +355,76 @@
     </footer>
 
     <script>
+        // ========== НОЧНАЯ ТЕМА ==========
+        function toggleTheme() {
+            document.body.classList.toggle('dark-theme');
+            const isDark = document.body.classList.contains('dark-theme');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            updateThemeButton(isDark);
+        }
+        
+        function updateThemeButton(isDark) {
+            const btn = document.getElementById('themeToggle');
+            if (isDark) {
+                btn.textContent = '☀️ Светлая тема';
+            } else {
+                btn.textContent = '🌙 Тёмная тема';
+            }
+        }
+        
+        function applySavedTheme() {
+            const saved = localStorage.getItem('theme');
+            if (saved === 'dark') {
+                document.body.classList.add('dark-theme');
+                updateThemeButton(true);
+            } else {
+                updateThemeButton(false);
+            }
+        }
+
         // ========== ДАННЫЕ ТЕСТОВ (3 уровня сложности) ==========
         const testsData = {
-            // ЛЁГКИЙ ТЕСТ (обновлён по вашим 12 заданиям)
             easy: [
-                { question: "Найдите величину центрального угла, если он на 69° больше острого вписанного угла, опирающегося на ту же дугу. Ответ дайте в градусах.", photo: "https://plcn.s3.yandex.net/resources/01BE6F_20251027_220107.svg", correct_answer: "138", solution: "Центральный угол в 2 раза больше вписанного, опирающегося на ту же дугу. Пусть вписанный угол α, тогда центральный 2α. По условию 2α − α = 69° ⇒ α = 69°. Центральный угол = 2·69° = 138°." },
-                { question: "Длины векторов a и b равны 3 и 5, а угол между ними равен 60°. Найдите скалярное произведение a·b.", photo: "", correct_answer: "7,5", solution: "a·b = |a|·|b|·cos60° = 3·5·0,5 = 7,5." },
-                { question: "Во сколько раз увеличится объём конуса, если радиус его основания увеличится в 11 раз, а высота останется прежней?", photo: "https://plcn.s3.yandex.net/resources/33B18F_20251027_220107.svg", correct_answer: "121", solution: "Объём конуса V = ⅓πR²h. При увеличении радиуса в 11 раз: V₁ = ⅓π(11R)²h = ⅓π·121R²h = 121V. Увеличится в 121 раз." },
-                { question: "В сборнике билетов по географии всего 20 билетов, в семи из них встречается вопрос по теме «Физическая география». Найдите вероятность того, что в случайно выбранном на экзамене билете школьнику достанется вопрос по теме «Физическая география».", photo: "", correct_answer: "0,35", solution: "Всего билетов 20, благоприятных 7. Вероятность = 7/20 = 0,35." },
-                { question: "В случайном эксперименте симметричную монету бросают дважды. Найдите вероятность того, что орёл не выпадет ни разу.", photo: "", correct_answer: "0,25", solution: "Всего равновозможных исходов: 4 (ОО, ОР, РО, РР). Благоприятный исход: РР – 1. Вероятность = 1/4 = 0,25." },
-                { question: "Найдите корень уравнения: √(36 − 4x) = 2.", photo: "", correct_answer: "8", solution: "Возведём обе части в квадрат: 36 − 4x = 4 ⇒ −4x = −32 ⇒ x = 8." },
-                { question: "Найдите значение выражения:  (3√8)² /6.", photo: "", correct_answer: "12", solution: "9*8/6=12 Ответ: 12 ." },
-                { question: "На рисунке изображены график функции y = f(x) и касательная к нему в точке с абсциссой x₀. Найдите значение производной функции f(x) в точке x₀.", photo: "https://plcn.s3.yandex.net/resources/AD55CA_20251027_220249.svg", correct_answer: "1,5", solution: "Производная в точке равна тангенсу угла наклона касательной. Построим треугольник с вершинами в точках A(3;5), B(1;2), C(3;2). AC = 3, BC = 2, tg = AC/BC = 3/2 = 1,5." },
-                { question: "Для сматывания кабеля на заводе используют лебёдку, которая равноускоренно наматывает кабель на катушку. Угол, на который поворачивается катушка, изменяется со временем по закону φ = ωt + βt²/2, где t — время в минутах, ω = 15 град/мин — начальная угловая скорость, β = 6 град/мин² — угловое ускорение. Определите время, прошедшее после начала работы лебёдки, если угол намотки φ достиг 2250°. Ответ дайте в минутах.", photo: "", correct_answer: "25", solution: "Подставляем: 2250 = 15t + (6t²)/2 = 15t + 3t² ⇒ 3t² + 15t − 2250 = 0 ⇒ t² + 5t − 750 = 0 ⇒ t = 25 (положительный корень)." },
-                { question: "Юля и Уля, работая вместе, пропалывают грядку за 24 минуты, а одна Уля — за 120 минут. За сколько минут пропалывает эту грядку одна Юля?", photo: "", correct_answer: "30", solution: "Производительность вместе: 1/24, производительность Ули: 1/120. Производительность Юли: 1/24 − 1/120 = 5/120 − 1/120 = 4/120 = 1/30. Значит, Юля пропалывает за 30 минут." },
-                { question: "На рисунке изображён график функции вида f(x) = aˣ. Найдите значение f(−3).", photo: "https://plcn.s3.yandex.net/resources/F469FF_20251027_220107.svg", correct_answer: "64", solution: "График проходит через точку (−1;4). Подставляем: 4 = a⁻¹ ⇒ a = 1/4. Тогда f(x) = (1/4)ˣ, f(−3) = (1/4)⁻³ = 4³ = 64." },
-                { question: "Найдите точку минимума функции y = x^(3/2) − 21x + 11.", photo: "", correct_answer: "196", solution: "Область определения: x ≥ 0. Производная: y' = (3/2)√x − 21. Приравниваем к нулю: (3/2)√x = 21 ⇒ √x = 14 ⇒ x = 196. При переходе через x=196 производная меняет знак с − на +, это точка минимума." }
+                { question: "Найдите величину центрального угла, если он на 69° больше острого вписанного угла, опирающегося на ту же дугу. Ответ дайте в градусах.", photo: "https://plcn.s3.yandex.net/resources/01BE6F_20251027_220107.svg", correct_answer: "138", hints: ["💡 Центральный угол в 2 раза больше вписанного.", "💡 Пусть вписанный = α, центральный = 2α. 2α − α = 69°.", "💡 α = 69°, центральный = 138°."], solution: "Центральный угол в 2 раза больше вписанного. Пусть вписанный угол α, тогда центральный 2α. 2α − α = 69° ⇒ α = 69°. Центральный = 2·69° = 138°." },
+                { question: "Длины векторов a и b равны 3 и 5, а угол между ними равен 60°. Найдите скалярное произведение a·b.", photo: "", correct_answer: "7,5", hints: ["💡 Формула: a·b = |a|·|b|·cos(угол).", "💡 Подставьте: 3·5·cos60°.", "💡 cos60° = 0,5. Ответ: 3·5·0,5 = 7,5."], solution: "a·b = |a|·|b|·cos60° = 3·5·0,5 = 7,5." },
+                { question: "Во сколько раз увеличится объём конуса, если радиус его основания увеличится в 11 раз, а высота останется прежней?", photo: "", correct_answer: "121", hints: ["💡 Объём конуса: V = ⅓πR²h.", "💡 Новый радиус = 11R. V₁ = ⅓π(11R)²h = ⅓π·121R²h.", "💡 V₁ = 121V. Ответ: в 121 раз."], solution: "V = ⅓πR²h. V₁ = ⅓π(11R)²h = 121V." },
+                { question: "В сборнике билетов по географии всего 20 билетов, в семи из них встречается вопрос по теме «Физическая география». Найдите вероятность того, что в случайно выбранном на экзамене билете школьнику достанется вопрос по теме «Физическая география».", photo: "", correct_answer: "0,35", hints: ["💡 Вероятность = благоприятные / всего.", "💡 Благоприятных = 7, всего = 20.", "💡 7/20 = 0,35."], solution: "7/20 = 0,35." },
+                { question: "В случайном эксперименте симметричную монету бросают дважды. Найдите вероятность того, что орёл не выпадет ни разу.", photo: "", correct_answer: "0,25", hints: ["💡 Все исходы: ОО, ОР, РО, РР.", "💡 Орёл не выпадет = РР.", "💡 1 исход из 4 = 1/4 = 0,25."], solution: "Всего 4 исхода. Благоприятный: РР. P = 1/4 = 0,25." },
+                { question: "Найдите корень уравнения: √(36 − 4x) = 2.", photo: "", correct_answer: "8", hints: ["💡 Возведите обе части в квадрат.", "💡 36 − 4x = 4.", "💡 −4x = −32 ⇒ x = 8."], solution: "36 − 4x = 4 ⇒ −4x = −32 ⇒ x = 8." },
+                { question: "Найдите значение выражения: (3√8)² / 6.", photo: "", correct_answer: "12", hints: ["💡 (3√8)² = 9·8 = 72.", "💡 72 / 6 = 12."], solution: "(3√8)² = 9·8 = 72. 72/6 = 12." },
+                { question: "На рисунке изображены график функции y = f(x) и касательная к нему в точке с абсциссой x₀. Найдите значение производной функции f(x) в точке x₀.", photo: "https://plcn.s3.yandex.net/resources/626B77_20251027_220107.svg", correct_answer: "1,5", hints: ["💡 Производная = tg угла наклона касательной.", "💡 Постройте треугольник на касательной.", "💡 tg = 3/2 = 1,5."], solution: "tg = 3/2 = 1,5." },
+                { question: "Для сматывания кабеля на заводе используют лебёдку, которая равноускоренно наматывает кабель на катушку. Угол, на который поворачивается катушка, изменяется со временем по закону φ = ωt + βt²/2, где t — время в минутах, ω = 15 град/мин — начальная угловая скорость, β = 6 град/мин² — угловое ускорение. Определите время, прошедшее после начала работы лебёдки, если угол намотки φ достиг 2250°. Ответ дайте в минутах.", photo: "", correct_answer: "25", hints: ["💡 2250 = 15t + 3t².", "💡 3t² + 15t − 2250 = 0 ⇒ t² + 5t − 750 = 0.", "💡 t = 25 (положительный корень)."], solution: "2250 = 15t + 3t² ⇒ t² + 5t − 750 = 0 ⇒ t = 25." },
+                { question: "Юля и Уля, работая вместе, пропалывают грядку за 24 минуты, а одна Уля — за 120 минут. За сколько минут пропалывает эту грядку одна Юля?", photo: "", correct_answer: "30", hints: ["💡 Производительность вместе = 1/24, Ули = 1/120.", "💡 Юли = 1/24 − 1/120 = 4/120 = 1/30.", "💡 Время Юли = 30 минут."], solution: "1/24 − 1/120 = 4/120 = 1/30. Ответ: 30 минут." },
+                { question: "На рисунке изображён график функции вида f(x) = aˣ. Найдите значение f(−3).", photo: "https://plcn.s3.yandex.net/resources/F469FF_20251027_220107.svg", correct_answer: "64", hints: ["💡 Точка (−1;4): 4 = a⁻¹ ⇒ a = 1/4.", "💡 f(x) = (1/4)ˣ.", "💡 f(−3) = (1/4)⁻³ = 4³ = 64."], solution: "4 = a⁻¹ ⇒ a = 1/4. f(−3) = (1/4)⁻³ = 64." },
+                { question: "Найдите точку минимума функции y = x^(3/2) − 21x + 11.", photo: "", correct_answer: "196", hints: ["💡 y' = (3/2)√x − 21 = 0.", "💡 √x = 14 ⇒ x = 196.", "💡 Знак меняется с − на +, это минимум."], solution: "y' = (3/2)√x − 21 = 0 ⇒ x = 196." }
             ],
             medium: [
-                { question: "Стороны параллелограмма равны 18 и 20. Высота, опущенная на меньшую сторону, равна 10. Найдите высоту, опущенную на большую сторону.", photo: "https://examer.ru/i/math/upload/26487_1587404566.jpg", correct_answer: "9", solution: "S = a·h_a = b·h_b ⇒ 18·10 = 20·h_b ⇒ h_b = 9." },
-                { question: "Найдите корень уравнения: 3^(x-8) = 1/81", photo: "", correct_answer: "4", solution: "1/81 = 3^(-4) ⇒ x-8 = -4 ⇒ x=4." },
-                { question: "Найдите значение выражения: (∛121 · ∜121) / ¹²√121", photo: "", correct_answer: "11", solution: "121^(1/3+1/4-1/12) = 121^(1/2) = 11." },
-                { question: "Прямая y = 7x - 5 параллельна касательной к y = x² + 6x - 8. Найдите абсциссу точки касания.", photo: "", correct_answer: "0,5", solution: "y' = 2x+6 = 7 ⇒ 2x=1 ⇒ x=0,5." },
-                { question: "Вероятность перегорания лампы 0,2. Найдите вероятность, что хотя бы одна из трёх ламп не перегорит.", photo: "", correct_answer: "0,992", solution: "P = 1 - 0,2³ = 1 - 0,008 = 0,992." },
-                { question: "Найдите объём шара, если цилиндр объёмом 18 описан около него.", photo: "https://canlidershane.s3.eu-central-1.amazonaws.com/content/static/uploads/files/dosya0_dosya0___so___image-1594469672.png", correct_answer: "12", solution: "V_шар = 4/3 πR³, 2πR³=18 ⇒ πR³=9 ⇒ V_шар=12." },
-                { question: "Найдите скалярное произведение векторов a(8;5) и b(7;3)", photo: "https://ege.fipi.ru/docs/AC437B34557F88EA4115D2F374B0A07B/questions/9C1C9B74538ABB0B46B91EABD8A2225D(copy1)/xs3qstsrcBC9E8B534F7498A843AC8AC2FA45A242_2_1710757447.png", correct_answer: "71", solution: "8·7 + 5·3 = 56+15=71." },
-                { question: "Найдите абсциссу точки пересечения графиков f(x)=x+4 и g(x)=2x", photo: "https://afb4a530-22b8-416e-b47c-cdbbbe63bf2f.selstorage.ru/files/Vc9Rc2dZkuNcOs32UcSqtGIetnicwApUBYPaZOL3.jpg", correct_answer: "4", solution: "x+4=2x ⇒ x=4." },
-                { question: "Найдите массу третьего сплава: первый 40% меди, второй 25% меди, масса первого на 10 кг больше, третий 35% меди.", photo: "", correct_answer: "30", solution: "x=10 ⇒ масса третьего = 30 кг." },
-                { question: "Найдите наименьшее значение y = x√x − 6x + 3 на [0;40]", photo: "", correct_answer: "-29", solution: "x=16 ⇒ y=-29." },
-                { question: "Найдите объём V₂ воздуха в колоколе: A = αυT log₂(V₁/V₂), A=10440, υ=2, α=8,7, T=300, V₁=120", photo: "", correct_answer: "30", solution: "10440=5220·log₂(120/V₂) ⇒ log₂(120/V₂)=2 ⇒ V₂=30." },
-                { question: "Найдите вероятность, что седьмым выступит учёный из Португалии (9 из 20)", photo: "", correct_answer: "0,45", solution: "9/20 = 0,45." }
+                { question: "Стороны параллелограмма равны 18 и 20. Высота, опущенная на меньшую сторону, равна 10. Найдите высоту, опущенную на большую сторону.", photo: "", correct_answer: "9", hints: ["💡 S = a·hₐ = b·h_b.", "💡 18·10 = 20·h_b.", "💡 h_b = 180/20 = 9."], solution: "18·10 = 20·h_b ⇒ h_b = 9." },
+                { question: "Найдите скалярное произведение векторов a(8; 5) * b(7; 3).", photo: "", correct_answer: "71", hints: ["💡 a·b = x₁x₂ + y₁y₂.", "💡 8·7 + 5·3.", "💡 56 + 15 = 71."], solution: "8·7 + 5·3 = 71." },
+                { question: "Цилиндр объёмом 18 описан около шара. Найдите объём шара.", photo: "", correct_answer: "12", hints: ["💡 V_цил = πR²·2R = 2πR³ = 18.", "💡 πR³ = 9.", "💡 V_шар = ⁴⁄₃πR³ = 12."], solution: "2πR³ = 18 ⇒ πR³ = 9. V_шар = 12." },
+                { question: "Вероятность того, что седьмым по счёту выступит учёный из Португалии, если всего 20 учёных, из них 9 из Португалии.", photo: "", correct_answer: "0,45", hints: ["💡 Номер не влияет на вероятность.", "💡 9 из 20.", "💡 9/20 = 0,45."], solution: "9/20 = 0,45." },
+                { question: "Вероятность перегорания одной лампы равна 0,2. Найдите вероятность того, что хотя бы одна из трёх ламп не перегорит.", photo: "", correct_answer: "0,992", hints: ["💡 P = 1 − P(все перегорят).", "💡 P(все) = 0,2³ = 0,008.", "💡 P = 1 − 0,008 = 0,992."], solution: "P = 1 − 0,2³ = 0,992." },
+                { question: "Найдите корень уравнения: 3^(x−8) = 1/81.", photo: "", correct_answer: "4", hints: ["💡 1/81 = 3⁻⁴.", "💡 x−8 = −4.", "💡 x = 4."], solution: "1/81 = 3⁻⁴ ⇒ x = 4." },
+                { question: "Найдите значение выражения: (∛121 · ∜121) / ¹²√121.", photo: "", correct_answer: "11", hints: ["💡 121^(1/3+1/4-1/12).", "💡 = 121^(1/2).", "💡 = 11."], solution: "121^(1/2) = 11." },
+                { question: "Прямая y = 7x − 5 параллельна касательной к графику функции y = x² + 6x − 8. Найдите абсциссу точки касания.", photo: "", correct_answer: "0,5", hints: ["💡 y' = 2x + 6 = 7.", "💡 2x = 1.", "💡 x = 0,5."], solution: "2x + 6 = 7 ⇒ x = 0,5." },
+                { question: "Для обогрева помещения используют водяной радиатор. Количество теплоты Q = cm(t₂−t₁), где c = 4200 Дж/(кг·°C), m = 0,5 кг, t₂−t₁ = 40°C. Найдите Q в кДж.", photo: "", correct_answer: "84", hints: ["💡 Q = 4200·0,5·40.", "💡 = 84 000 Дж.", "💡 = 84 кДж."], solution: "Q = 4200·0,5·40 = 84 000 Дж = 84 кДж." },
+                { question: "Имеется два сплава. Первый содержит 40% меди, второй — 25% меди. Масса первого сплава на 10 кг больше массы второго. Из этих двух сплавов получили третий сплав, содержащий 35% меди. Найдите массу третьего сплава в килограммах.", photo: "", correct_answer: "30", hints: ["💡 Пусть масса второго x, первого x+10.", "💡 0,4(x+10) + 0,25x = 0,35(2x+10).", "💡 x = 10, третий = 30."], solution: "0,4(x+10) + 0,25x = 0,35(2x+10) ⇒ x = 10. Масса = 30 кг." },
+                { question: "На рисунке изображены графики двух линейных функций, пересекающиеся в точке A. Найдите абсциссу точки A.", photo: "https://plcn.s3.yandex.net/resources/1DC3CC_20251027_220107.svg", correct_answer: "4", hints: ["💡 Верхняя прямая: f(x) = x + 4.", "💡 Нижняя прямая: g(x) = 2x.", "💡 x + 4 = 2x ⇒ x = 4."], solution: "f(x) = x + 4, g(x) = 2x. x + 4 = 2x ⇒ x = 4." },
+                { question: "Найдите наименьшее значение функции y = x√x − 6x + 3 на отрезке [0; 40].", photo: "", correct_answer: "-29", hints: ["💡 y' = (3/2)√x − 6 = 0.", "💡 √x = 4 ⇒ x = 16.", "💡 y(16) = 64 − 96 + 3 = −29."], solution: "y' = (3/2)√x − 6 = 0 ⇒ x = 16. y(16) = −29." }
             ],
             hard: [
-                { question: "В треугольнике ABC угол C равен 90°, AB = 10, BC = √19. Найдите cos A.", photo: "", correct_answer: "0,9", solution: "По теореме Пифагора: AC = √(AB² - BC²) = √(100 - 19) = √81 = 9. cos A = AC/AB = 9/10 = 0,9." },
-                { question: "Длины векторов a и b равны 3 и 5, угол между ними 60°. Найдите скалярное произведение a·b.", photo: "", correct_answer: "7,5", solution: "a·b = |a|·|b|·cos60° = 3·5·0,5 = 7,5." },
-                { question: "Дана правильная треугольная призма ABCA₁B₁C₁, площадь основания которой равна 4, а боковое ребро равно 6. Найдите объём многогранника, вершинами которого являются точки B, C, A₁, B₁, C₁.", photo: "https://plcn.s3.yandex.net/resources/370392_20251027_220107.svg", correct_answer: "16", solution: "Объём призмы V_призмы = S_осн·h = 4·6 = 24. Объём пирамиды ABCA₁ = (1/3)·S_осн·h = (1/3)·4·6 = 8. Искомый объём = 24 − 8 = 16." },
-                { question: "На конференцию приехали учёные из трёх стран: 5 из Австрии, 4 из Германии и 6 из Сербии. Каждый делает один доклад. Порядок определяется жеребьёвкой. Найдите вероятность того, что десятым окажется доклад учёного из Сербии.", photo: "", correct_answer: "0,4", solution: "Всего учёных: 5+4+6=15. Благоприятных исходов (учёные из Сербии) – 6. Вероятность = 6/15 = 0,4." },
-                { question: "Найдите корень уравнения: ∛(x+3) = 3.", photo: "", correct_answer: "24", solution: "Возведём обе части в куб: (∛(x+3))³ = 3³ ⇒ x+3 = 27 ⇒ x = 24." },
-                { question: "Найдите tg α, если sin α = √26/26 и α ∈ (0; π/2).", photo: "", correct_answer: "0,2", solution: "cos²α = 1 - sin²α = 1 - 26/676 = 1 - 1/26 = 25/26, cosα = 5/√26 (положительный), tgα = sinα/cosα = (√26/26)/(5/√26) = 1/5 = 0,2." },
-                { question: "На рисунке изображён график y = f'(x) — производной функции f(x), определённой на интервале (−10;7). Найдите количество точек минимума функции f(x), принадлежащих отрезку [−2;6].", photo: "https://plcn.s3.yandex.net/resources/396DA0_20251027_220107.svg", correct_answer: "1", solution: "В точке минимума производная равна 0 и меняет знак с '-' на '+'. Отрезку [−2;6] принадлежит одна такая точка: x = 3." },
-                { question: "Для определения эффективной температуры звёзд используют закон Стефана–Больцмана: P = σST⁴, где P — мощность излучения, σ = 5,7·10⁻⁸ Вт/(м²·К⁴) — постоянная, S — площадь поверхности звезды (м²), T — температура (К). Площадь поверхности звезды равна 1/2401·10²² м², мощность излучения 5,7·10²⁶ Вт. Найдите температуру звезды в кельвинах.", photo: "", correct_answer: "7000", solution: "5,7·10²⁶ = 5,7·10⁻⁸ · (1/2401)·10²² · T⁴ ⇒ T⁴ = (5,7·10²⁶ · 2401) / (5,7·10⁻⁸·10²²) = 2401·10¹² = 2401·10¹². T = (2401·10¹²)^(1/4) = (2401)^(1/4)·10³ = 7·10³ = 7000." },
-                { question: "Расстояние между пристанями A и B равно 192 км. Из A в B по течению реки отправился плот, а через 3 часа вслед за ним отправилась яхта, которая, прибыв в B, тотчас повернула обратно и возвратилась в A. К этому времени плот проплыл 92 км. Найдите скорость яхты в неподвижной воде, если скорость течения реки равна 4 км/ч.", photo: "", correct_answer: "20", solution: "Пусть скорость яхты в стоячей воде x км/ч. Время плота до встречи: 92/4 = 23 ч. Время яхты: 192/(x+4) + 192/(x-4) = 23 - 3 = 20. Решая, получаем x=20." },
-                { question: "На рисунке изображены графики функций f(x)=ax²+bx+c и g(x)=kx, пересекающиеся в точках A и B. Найдите абсциссу точки B.", photo: "https://plcn.s3.yandex.net/resources/82DA5C_20251027_220107.svg", correct_answer: "7", solution: "Парабола проходит через (0;0), (4;0), (5;5). Получаем f(x)=x²-4x. Прямая проходит через (1;3) ⇒ k=3, g(x)=3x. Решаем x²-4x=3x ⇒ x²-7x=0 ⇒ x=0 или x=7. Абсцисса B = 7." },
-                { question: "Найдите наименьшее значение функции y = 10 cos x − 14x + 5 на отрезке [−3π/2; 0].", photo: "", correct_answer: "15", solution: "y' = -10 sin x - 14 = 0 ⇒ sin x = -1,4 — решений нет. Находим значения на концах: y(0)=10·1+5=15, y(-3π/2)=0+21π+5>15. Наименьшее = 15." }
+                { question: "В треугольнике ABC угол C равен 90°, AB = 10, BC = √19. Найдите cos A.", photo: "", correct_answer: "0,9", hints: ["💡 AC = √(100−19) = 9.", "💡 cos A = AC/AB.", "💡 = 9/10 = 0,9."], solution: "AC = 9. cos A = 9/10 = 0,9." },
+                { question: "Длины векторов a и b равны 3 и 5, угол между ними 60°. Найдите скалярное произведение a·b.", photo: "", correct_answer: "7,5", hints: ["💡 a·b = |a|·|b|·cos60°.", "💡 3·5·0,5.", "💡 = 7,5."], solution: "3·5·0,5 = 7,5." },
+                { question: "Дана правильная треугольная призма ABCA₁B₁C₁, площадь основания которой равна 4, а боковое ребро равно 6. Найдите объём многогранника, вершинами которого являются точки B, C, A₁, B₁, C₁.", photo: "https://plcn.s3.yandex.net/resources/370392_20251027_220107.svg", correct_answer: "16", hints: ["💡 V_призмы = 24.", "💡 V_пирамиды = 8.", "💡 Ответ: 24−8 = 16."], solution: "V = 24 − 8 = 16." },
+                { question: "На конференцию приехали учёные из трёх стран: 5 из Австрии, 4 из Германии и 6 из Сербии. Найдите вероятность, что десятым окажется доклад учёного из Сербии.", photo: "", correct_answer: "0,4", hints: ["💡 Всего: 5+4+6 = 15.", "💡 Из Сербии: 6.", "💡 P = 6/15 = 0,4."], solution: "6/15 = 0,4." },
+                { question: "В торговом центре два автомата с кофе. P(закончится) = 0,3. P(в обоих) = 0,12. Найдите P(останется в обоих).", photo: "", correct_answer: "0,52", hints: ["💡 P(A∪B) = 0,3+0,3−0,12 = 0,48.", "💡 Это вероятность, что закончится хотя бы в одном.", "💡 Ответ: 1−0,48 = 0,52."], solution: "P(A∪B) = 0,48. 1−0,48 = 0,52." },
+                { question: "Найдите корень уравнения: ∛(x+3) = 3.", photo: "", correct_answer: "24", hints: ["💡 x+3 = 27.", "💡 x = 24."], solution: "x+3 = 27 ⇒ x = 24." },
+                { question: "Найдите tg α, если sin α = √26/26 и α ∈ (0; π/2).", photo: "", correct_answer: "0,2", hints: ["💡 cos²α = 1−26/676 = 25/26.", "💡 cosα = 5/√26.", "💡 tgα = 1/5 = 0,2."], solution: "tgα = 0,2." },
+                { question: "На рисунке изображён график y = f'(x). Найдите количество точек минимума f(x) на [−2;6].", photo: "https://plcn.s3.yandex.net/resources/396DA0_20251027_220107.svg", correct_answer: "1", hints: ["💡 Точка минимума: f'=0 и меняет знак с − на +.", "💡 Это x = 3."], solution: "Одна точка: x = 3." },
+                { question: "P = σST⁴. S = 1/2401·10²², P = 5,7·10²⁶. Найдите T.", photo: "", correct_answer: "7000", hints: ["💡 T⁴ = 2401·10¹².", "💡 T = 7·10³.", "💡 T = 7000."], solution: "T = 7000." },
+                { question: "Расстояние между пристанями 192 км. Плот прошёл 92 км. Скорость течения 4 км/ч. Найдите скорость яхты в неподвижной воде.", photo: "", correct_answer: "20", hints: ["💡 Время плота: 92/4 = 23 ч.", "💡 Время яхты: 20 ч.", "💡 192/(x+4)+192/(x−4)=20 ⇒ x=20."], solution: "x = 20." },
+                { question: "На рисунке изображены графики f(x)=ax²+bx+c и g(x)=kx. Найдите абсциссу точки B.", photo: "https://plcn.s3.yandex.net/resources/82DA5C_20251027_220107.svg", correct_answer: "7", hints: ["💡 f(x)=x²−4x, g(x)=3x.", "💡 x²−4x=3x.", "💡 x=7."], solution: "x = 7." },
+                { question: "Найдите наименьшее значение функции y = 10 cos x − 14x + 5 на отрезке [−3π/2; 0].", photo: "", correct_answer: "15", hints: ["💡 y' = −10sin x − 14 = 0 не имеет решений.", "💡 y(0) = 15, y(−3π/2) ≈ 71.", "💡 Ответ: 15."], solution: "y(0) = 15." }
             ]
         };
 
@@ -287,7 +438,9 @@
             isRetryMode: false,
             retryData: null,
             finalScore: 0,
-            totalQuestions: 12
+            totalQuestions: 12,
+            currentHints: [],
+            hintsUsed: 0
         };
 
         function getCurrentQuestions() {
@@ -296,8 +449,7 @@
         }
 
         function normalizeAnswer(ans) {
-            let str = String(ans).trim().toLowerCase().replace(',', '.');
-            return str;
+            return String(ans).trim().toLowerCase().replace(',', '.');
         }
 
         function renderDifficultySelector() {
@@ -315,26 +467,69 @@
                 return;
             }
             const q = questions[testState.currentIndex];
+            testState.currentHints = [];
+            testState.hintsUsed = 0;
             const progress = `Вопрос ${testState.currentIndex+1} из ${questions.length}`;
             let html = `
                 <div class="question-card">
                     <div class="question-text"><strong>${progress}</strong><br><br>${q.question}</div>
-                    ${q.photo ? `<img src="${q.photo}" class="question-image" alt="Иллюстрация">` : ''}
+                    ${q.photo ? `<img src="${q.photo}" class="question-image" alt="Иллюстрация к заданию">` : ''}
                     <input type="text" id="answerInput" class="answer-input" placeholder="Введите ваш ответ">
                     <div class="button-group">
-                        <button onclick="submitAnswer()">Ответить</button>
-                        <button onclick="skipQuestion()">Пропустить</button>
-                        <button onclick="abortTest()" class="btn-danger">Прервать тест</button>
+                        <button id="submitBtn">✅ Ответить</button>
+                        <button id="hintBtn" class="btn-hint">💡 Подсказка <span class="hint-count">${q.hints ? q.hints.length : 0}</span></button>
+                        <button id="skipBtn">⏭ Пропустить</button>
+                        <button id="abortBtn" class="btn-danger">✖ Прервать</button>
                     </div>
+                    <div id="hintContainer"></div>
                 </div>
             `;
             container.innerHTML = html;
+            
+            document.getElementById('submitBtn').addEventListener('click', submitAnswer);
+            document.getElementById('skipBtn').addEventListener('click', skipQuestion);
+            document.getElementById('abortBtn').addEventListener('click', abortTest);
+            document.getElementById('hintBtn').addEventListener('click', showHint);
+            document.getElementById('answerInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') submitAnswer();
+            });
             document.getElementById('answerInput').focus();
+        }
+
+        function showHint() {
+            const q = getCurrentQuestions()[testState.currentIndex];
+            if (!q.hints || testState.currentHints.length >= q.hints.length) {
+                alert('Подсказки закончились!');
+                return;
+            }
+            const hintLevel = testState.currentHints.length;
+            testState.currentHints.push(hintLevel);
+            testState.hintsUsed++;
+            
+            const hintContainer = document.getElementById('hintContainer');
+            const hintDiv = document.createElement('div');
+            hintDiv.className = 'hint-box';
+            hintDiv.innerHTML = `
+                <div class="hint-level">🔍 Подсказка ${hintLevel + 1} из ${q.hints.length}:</div>
+                <div class="hint-text">${q.hints[hintLevel]}</div>
+            `;
+            hintContainer.appendChild(hintDiv);
+            
+            const hintBtn = document.getElementById('hintBtn');
+            const remaining = q.hints.length - testState.currentHints.length;
+            hintBtn.innerHTML = `💡 Подсказка <span class="hint-count">${remaining}</span>`;
+            if (remaining === 0) hintBtn.disabled = true;
         }
 
         function submitAnswer() {
             const input = document.getElementById('answerInput');
-            const userAnswerRaw = input.value;
+            const userAnswerRaw = input.value.trim();
+            
+            if (userAnswerRaw === '') {
+                alert('Пожалуйста, введите ответ перед отправкой.');
+                return;
+            }
+            
             const questions = getCurrentQuestions();
             const q = questions[testState.currentIndex];
             const normalizedUser = normalizeAnswer(userAnswerRaw);
@@ -346,7 +541,8 @@
                 correct: isCorrect,
                 question: q.question,
                 correctAnswer: q.correct_answer,
-                solution: q.solution
+                solution: q.solution,
+                hintsUsed: testState.hintsUsed
             });
             
             if (isCorrect) {
@@ -361,16 +557,19 @@
                     testState.wrongQuestions.push(testState.currentIndex);
                 }
                 showFeedback(false, q.correct_answer, q.solution);
-                const nextButton = document.createElement('button');
-                nextButton.textContent = 'Следующий вопрос';
-                nextButton.onclick = () => {
+                const nextBtn = document.createElement('button');
+                nextBtn.textContent = '➡ Следующий вопрос';
+                nextBtn.style.marginTop = '10px';
+                nextBtn.addEventListener('click', () => {
                     testState.currentIndex++;
                     renderQuestion();
-                };
+                });
                 const buttonGroup = document.querySelector('.button-group');
-                buttonGroup.appendChild(nextButton);
-                const submitBtn = document.querySelector('button[onclick="submitAnswer()"]');
+                buttonGroup.appendChild(nextBtn);
+                const submitBtn = document.getElementById('submitBtn');
                 if (submitBtn) submitBtn.disabled = true;
+                const hintBtn = document.getElementById('hintBtn');
+                if (hintBtn) hintBtn.disabled = true;
             }
         }
         
@@ -378,10 +577,10 @@
             const card = document.querySelector('.question-card');
             let feedbackHtml = '';
             if (correct) {
-                feedbackHtml = `<div class="feedback-correct">✅ Верно!</div>`;
+                feedbackHtml = `<div class="feedback-correct">✅ Верно! Отличная работа!</div>`;
             } else {
                 feedbackHtml = `
-                    <div class="feedback-wrong">❌ Неверно.</div>
+                    <div class="feedback-wrong">❌ Неверно</div>
                     <div class="solution">
                         <strong>Правильный ответ:</strong> ${correctAnswer}<br><br>
                         <strong>Решение:</strong> ${solution}
@@ -401,7 +600,8 @@
                 correct: false,
                 question: q.question,
                 correctAnswer: q.correct_answer,
-                solution: q.solution
+                solution: q.solution,
+                hintsUsed: testState.hintsUsed
             });
             if (!testState.isRetryMode) {
                 testState.wrongQuestions.push(testState.currentIndex);
@@ -411,98 +611,101 @@
         }
         
         function abortTest() {
-            if (confirm('Вы уверены, что хотите прервать тест?')) {
+            if (confirm('Вы уверены, что хотите прервать тест? Ваш прогресс будет потерян.')) {
                 finishTest();
             }
         }
         
         function getUniversityRecommendations(score, total, difficulty) {
-            const percent = (score / total) * 100;
+            const percent = Math.round((score / total) * 100);
+            
             if (difficulty === 'easy') {
                 if (score >= 10) {
                     return {
-                        message: "🎉 Отличный результат! Вы готовы переходить к среднему уровню!",
+                        message: "🎉 Отличный результат! Вы уверенно владеете базой.",
                         universities: [
-                            { name: "МГУ им. Ломоносова", faculty: "Механико-математический факультет", score: "85+" },
-                            { name: "МФТИ", faculty: "Факультет аэрофизики и космических исследований", score: "90+" }
+                            { name: "НИУ ВШЭ (Москва)", faculty: "Факультет компьютерных наук", score: "85+", description: "Лучший IT-вуз страны." },
+                            { name: "МФТИ (Физтех)", faculty: "ФУПМ", score: "90+", description: "Элитный вуз для будущих учёных." }
                         ],
-                        suggestion: "Попробуйте тест среднего уровня сложности →"
+                        suggestion: "⭐ Попробуйте средний уровень сложности."
                     };
                 } else if (score >= 7) {
                     return {
-                        message: "📚 Хороший результат! Есть куда расти.",
+                        message: "📚 Хороший результат! Базу вы знаете.",
                         universities: [
-                            { name: "НИУ ВШЭ", faculty: "Прикладная математика", score: "75+" },
-                            { name: "СПбГУ", faculty: "Математика и механика", score: "80+" }
+                            { name: "РЭУ им. Плеханова", faculty: "Факультет математической экономики", score: "70+", description: "Математика + экономика." },
+                            { name: "МГТУ им. Баумана", faculty: "Факультет фундаментальных наук", score: "75+", description: "Ведущий технический вуз." }
                         ],
-                        suggestion: "Повторите ошибки в разделе «Формулы»"
+                        suggestion: "📖 Повторите ошибки."
                     };
                 } else {
                     return {
-                        message: "😔 К сожалению, результат ниже среднего. Возможно, математика не ваш профиль?",
+                        message: "😔 Базовый уровень даётся с трудом.",
                         universities: [
-                            { name: "РГГУ", faculty: "Гуманитарные науки", score: "40+" },
-                            { name: "МПГУ", faculty: "Педагогическое образование", score: "45+" }
+                            { name: "МПГУ (Москва)", faculty: "Институт математики и информатики", score: "65+", description: "Педагогическое образование." },
+                            { name: "ВолГУ (Волгоград)", faculty: "Институт математики и IT", score: "55+", description: "Региональный вуз." }
                         ],
-                        suggestion: "Рекомендуем изучить раздел «Формулы» и попробовать снова"
+                        suggestion: "🧠 Начните с формулы."
                     };
                 }
-            } else if (difficulty === 'medium') {
+            }
+            else if (difficulty === 'medium') {
                 if (score >= 10) {
                     return {
-                        message: "🏆 Поздравляем! Вы отлично справились! Попробуйте сложный уровень!",
+                        message: "🏆 Отлично! Вы готовы к волгоградским вузам.",
                         universities: [
-                            { name: "МГТУ им. Баумана", faculty: "Информатика и системы управления", score: "85+" },
-                            { name: "СПбПУ", faculty: "Физико-математический факультет", score: "80+" }
+                            { name: "ВолГУ", faculty: "Институт математики и IT", score: "70+", description: "Крупнейший вуз Волгограда." },
+                            { name: "ВолгГТУ", faculty: "Факультет автоматизированных систем", score: "65+", description: "Техническое образование." }
                         ],
-                        suggestion: "Перейдите на сложный уровень →"
+                        suggestion: "🔥 Перейдите на сложный уровень."
                     };
                 } else if (score >= 7) {
                     return {
-                        message: "👍 Неплохо! Ещё немного практики — и вы на высоте!",
+                        message: "👍 Неплохо, но нужно подтянуть.",
                         universities: [
-                            { name: "НИУ МЭИ", faculty: "Прикладная математика", score: "70+" },
-                            { name: "РУДН", faculty: "Физико-математический факультет", score: "75+" }
+                            { name: "ВГСПУ", faculty: "Факультет математики и физики", score: "55+", description: "Педагогическое образование." },
+                            { name: "Волгоградский институт бизнеса", faculty: "Экономический факультет", score: "50+", description: "Частный вуз." }
                         ],
-                        suggestion: "Повторите ошибки или вернитесь к лёгкому уровню"
+                        suggestion: "📘 Повторите ошибки."
                     };
                 } else {
                     return {
-                        message: "📖 Стоит подтянуть теорию. Начните с лёгкого уровня.",
+                        message: "📖 Нужно подтянуть математику.",
                         universities: [
-                            { name: "МПГУ", faculty: "Математический факультет", score: "50+" },
-                            { name: "ВолГУ", faculty: "Математика и информатика", score: "45+" }
+                            { name: "Волгоградский техникум ж/д транспорта", faculty: "СПО", score: "Не требуется", description: "Колледж." },
+                            { name: "Волгоградский колледж управления", faculty: "СПО", score: "Не требуется", description: "Колледж." }
                         ],
-                        suggestion: "Рекомендуем изучить раздел «Формулы»"
+                        suggestion: "📚 Начните с лёгкого теста."
                     };
                 }
-            } else { // hard
+            }
+            else {
                 if (score >= 10) {
                     return {
-                        message: "🌟 Вы — настоящий математический гений! Вам открыты двери лучших вузов!",
+                        message: "🌟 Вы — математический гений!",
                         universities: [
-                            { name: "МГУ им. Ломоносова", faculty: "Механико-математический факультет", score: "90+" },
-                            { name: "МФТИ", faculty: "Факультет управления и прикладной математики", score: "95+" }
+                            { name: "МГУ им. Ломоносова", faculty: "Мехмат", score: "90+", description: "Легендарный факультет." },
+                            { name: "СПбГУ", faculty: "Матмех", score: "85+", description: "Классическое образование." }
                         ],
-                        suggestion: "Вы готовы к олимпиадному уровню!"
+                        suggestion: "🎓 Попробуйте олимпиады!"
                     };
                 } else if (score >= 7) {
                     return {
-                        message: "🎓 Достойный результат! Вы на верном пути.",
+                        message: "🎓 Достойный результат!",
                         universities: [
-                            { name: "НИУ ВШЭ", faculty: "Прикладная математика и информатика", score: "80+" },
-                            { name: "ИТМО", faculty: "Информационные технологии", score: "85+" }
+                            { name: "МФТИ", faculty: "ФУПМ", score: "80+", description: "Элитный вуз." },
+                            { name: "ИТМО", faculty: "Факультет IT", score: "85+", description: "Ведущий IT-вуз." }
                         ],
-                        suggestion: "Повторите ошибки и попробуйте ещё раз"
+                        suggestion: "📈 Повторите ошибки."
                     };
                 } else {
                     return {
-                        message: "📘 Сложный уровень требует больше практики. Вернитесь к среднему уровню.",
+                        message: "📘 Сложный уровень требует практики.",
                         universities: [
-                            { name: "ВолгГТУ", faculty: "Информатика и вычислительная техника", score: "60+" },
-                            { name: "ВолГУ", faculty: "Прикладная математика", score: "55+" }
+                            { name: "НИУ ВШЭ", faculty: "Экономический факультет", score: "75+", description: "Сильный вуз." },
+                            { name: "СПбПУ", faculty: "Прикладная математика", score: "70+", description: "Крупный технический вуз." }
                         ],
-                        suggestion: "Рекомендуем изучить раздел «Формулы» и пройти средний уровень"
+                        suggestion: "📚 Вернитесь к среднему уровню."
                     };
                 }
             }
@@ -515,17 +718,15 @@
             const recommendations = getUniversityRecommendations(correct, total, testState.currentDifficulty);
             
             let buttonsHtml = `
-                <button class="btn-success" onclick="retryWrong()">🔄 Повторить ошибки</button>
-                <button onclick="showDifficultySelector()">📊 Выбрать другой тест</button>
-                <button onclick="location.href='formulas.html'">📚 Изучить формулы</button>
+                <button class="btn-success" id="retryWrongBtn">🔄 Повторить ошибки</button>
+                <button id="showDiffBtn">📊 Выбрать другой тест</button>
+                <button id="goFormulasBtn">📚 Изучить формулы</button>
             `;
             
             if (testState.currentDifficulty === 'easy' && correct >= 10) {
-                buttonsHtml += `<button class="btn" onclick="switchToDifficulty('medium')">⬆️ Перейти на средний уровень</button>`;
+                buttonsHtml += `<button class="btn" id="goMediumBtn">⬆️ Средний уровень</button>`;
             } else if (testState.currentDifficulty === 'medium' && correct >= 10) {
-                buttonsHtml += `<button class="btn" onclick="switchToDifficulty('hard')">⬆️ Перейти на сложный уровень</button>`;
-            } else if (testState.currentDifficulty === 'easy' && correct < 7) {
-                buttonsHtml += `<button onclick="location.href='formulas.html'">📖 Подтянуть знания</button>`;
+                buttonsHtml += `<button class="btn" id="goHardBtn">⬆️ Сложный уровень</button>`;
             }
             
             let universitiesHtml = `
@@ -553,13 +754,19 @@
                     </div>
                 </div>
             `;
+            
+            document.getElementById('retryWrongBtn').addEventListener('click', retryWrong);
+            document.getElementById('showDiffBtn').addEventListener('click', showDifficultySelector);
+            document.getElementById('goFormulasBtn').addEventListener('click', () => location.href='formulas.html');
+            if (document.getElementById('goMediumBtn')) document.getElementById('goMediumBtn').addEventListener('click', () => switchToDifficulty('medium'));
+            if (document.getElementById('goHardBtn')) document.getElementById('goHardBtn').addEventListener('click', () => switchToDifficulty('hard'));
         }
         
         function retryWrong() {
             const questions = testsData[testState.currentDifficulty];
             const wrongIndices = testState.wrongQuestions;
             if (wrongIndices.length === 0) {
-                alert('Нет ошибочных вопросов для повторения!');
+                alert('Нет ошибочных вопросов!');
                 return;
             }
             const retryQuestions = wrongIndices.map(idx => questions[idx]);
@@ -572,7 +779,9 @@
                 isRetryMode: true,
                 retryData: retryQuestions,
                 finalScore: 0,
-                totalQuestions: retryQuestions.length
+                totalQuestions: retryQuestions.length,
+                currentHints: [],
+                hintsUsed: 0
             };
             renderQuestion();
         }
@@ -587,19 +796,24 @@
                 isRetryMode: false,
                 retryData: null,
                 finalScore: 0,
-                totalQuestions: 12
+                totalQuestions: 12,
+                currentHints: [],
+                hintsUsed: 0
             };
             const container = document.getElementById('test-container');
             container.innerHTML = `
                 <div class="result-card">
                     <h3>Выберите уровень сложности</h3>
                     <div class="difficulty-buttons">
-                        <button class="difficulty-btn easy" onclick="switchToDifficulty('easy')">🌱 Лёгкий</button>
-                        <button class="difficulty-btn medium" onclick="switchToDifficulty('medium')">⭐ Средний</button>
-                        <button class="difficulty-btn hard" onclick="switchToDifficulty('hard')">🔥 Сложный</button>
+                        <button class="difficulty-btn easy" id="toEasy">🌱 Лёгкий</button>
+                        <button class="difficulty-btn medium" id="toMedium">⭐ Средний</button>
+                        <button class="difficulty-btn hard" id="toHard">🔥 Сложный</button>
                     </div>
                 </div>
             `;
+            document.getElementById('toEasy').addEventListener('click', () => switchToDifficulty('easy'));
+            document.getElementById('toMedium').addEventListener('click', () => switchToDifficulty('medium'));
+            document.getElementById('toHard').addEventListener('click', () => switchToDifficulty('hard'));
         }
         
         function switchToDifficulty(difficulty) {
@@ -612,26 +826,15 @@
                 isRetryMode: false,
                 retryData: null,
                 finalScore: 0,
-                totalQuestions: 12
+                totalQuestions: 12,
+                currentHints: [],
+                hintsUsed: 0
             };
             renderDifficultySelector();
             renderQuestion();
         }
         
-        function initTest() {
-            renderDifficultySelector();
-            renderQuestion();
-        }
-        
-        // Привязка глобальных функций
-        window.submitAnswer = submitAnswer;
-        window.skipQuestion = skipQuestion;
-        window.abortTest = abortTest;
-        window.retryWrong = retryWrong;
-        window.showDifficultySelector = showDifficultySelector;
-        window.switchToDifficulty = switchToDifficulty;
-        
-        // Обработчики для кнопок выбора сложности
+        // Привязка обработчиков к кнопкам выбора сложности
         document.querySelectorAll('.difficulty-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 const diff = this.dataset.diff;
@@ -639,7 +842,10 @@
             });
         });
         
-        initTest();
+        // Инициализация
+        applySavedTheme();
+        renderDifficultySelector();
+        renderQuestion();
     </script>
 </body>
 </html>
