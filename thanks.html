@@ -3,8 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Спасибо | ЕГЭ Математика</title>
+    <title>Обратная связь | ЕГЭ Математика</title>
     <style>
+        :root {
+            --bg: #f0f7ff;
+            --card-bg: #ffffff;
+            --text: #1e2a3a;
+            --text-secondary: #555;
+            --header-bg: #2c3e50;
+            --header-text: #ffffff;
+            --accent: #3498db;
+            --accent-hover: #2980b9;
+            --red: #e63946;
+            --shadow: 0 4px 6px rgba(0,0,0,0.1);
+            --input-border: #ccc;
+            --footer-bg: #2c3e50;
+            --footer-text: #ffffff;
+        }
+        
+        .dark-theme {
+            --bg: #1a1a2e;
+            --card-bg: #16213e;
+            --text: #e0e0e0;
+            --text-secondary: #b0b0b0;
+            --header-bg: #0f3460;
+            --header-text: #ffffff;
+            --accent: #e94560;
+            --accent-hover: #c23152;
+            --red: #e94560;
+            --shadow: 0 4px 6px rgba(0,0,0,0.3);
+            --input-border: #444;
+            --footer-bg: #0f3460;
+            --footer-text: #e0e0e0;
+        }
+        
         * {
             margin: 0;
             padding: 0;
@@ -12,34 +44,54 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         body {
-            background: #f0f7ff;
-            color: #1e2a3a;
+            background: var(--bg);
+            color: var(--text);
             line-height: 1.6;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
+            transition: background 0.3s, color 0.3s;
         }
         header {
-            background: #2c3e50;
-            color: white;
+            background: var(--header-bg);
+            color: var(--header-text);
             padding: 1rem 2rem;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
         }
         nav ul {
             display: flex;
-            justify-content: center;
+            justify-content: flex-start;
             list-style: none;
             gap: 2rem;
             flex-wrap: wrap;
         }
         nav a {
-            color: white;
+            color: var(--header-text);
             text-decoration: none;
             font-weight: bold;
             transition: color 0.3s;
         }
         nav a:hover {
             color: #f1c40f;
+        }
+        .theme-toggle {
+            background: transparent;
+            border: 2px solid var(--header-text);
+            color: var(--header-text);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        .theme-toggle:hover {
+            background: var(--header-text);
+            color: var(--header-bg);
         }
         main {
             flex: 1;
@@ -48,27 +100,28 @@
         .container {
             max-width: 600px;
             margin: 0 auto;
-            text-align: center;
         }
         .thanks-card {
-            background: white;
+            background: var(--card-bg);
             border-radius: 12px;
             padding: 2rem;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: var(--shadow);
             margin-bottom: 2rem;
+            text-align: left;
         }
         .thanks-card h1 {
-            color: #2c3e50;
+            color: var(--text);
             margin-bottom: 1rem;
         }
         .feedback-form {
-            background: white;
+            background: var(--card-bg);
             border-radius: 12px;
             padding: 2rem;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: var(--shadow);
+            text-align: left;
         }
         .feedback-form h2 {
-            color: #2c3e50;
+            color: var(--text);
             margin-bottom: 1rem;
         }
         .form-group {
@@ -79,20 +132,28 @@
             display: block;
             margin-bottom: 0.5rem;
             font-weight: bold;
+            color: var(--text);
         }
         input, textarea {
             width: 100%;
             padding: 0.8rem;
-            border: 1px solid #ccc;
+            border: 2px solid var(--input-border);
             border-radius: 5px;
             font-size: 1rem;
+            transition: border-color 0.3s;
+            background: var(--card-bg);
+            color: var(--text);
+        }
+        input:focus, textarea:focus {
+            border-color: var(--accent);
+            outline: none;
         }
         textarea {
             resize: vertical;
             min-height: 100px;
         }
         button {
-            background: #3498db;
+            background: var(--accent);
             color: white;
             border: none;
             padding: 0.8rem 1.5rem;
@@ -102,19 +163,29 @@
             transition: background 0.3s;
         }
         button:hover {
-            background: #2980b9;
+            background: var(--accent-hover);
         }
         .success-message {
             margin-top: 1rem;
-            color: green;
+            color: #27ae60;
             font-weight: bold;
+            min-height: 24px;
+            text-align: left;
         }
         footer {
             text-align: center;
             padding: 1rem;
-            background: #2c3e50;
-            color: white;
+            background: var(--footer-bg);
+            color: var(--footer-text);
             margin-top: 2rem;
+        }
+        .ege-link {
+            color: var(--red);
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .ege-link:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -128,12 +199,15 @@
                 <li><a href="thanks.html">Обратная связь</a></li>
             </ul>
         </nav>
+        <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">🌙 Тёмная тема</button>
     </header>
     <main>
         <div class="container">
             <div class="thanks-card">
                 <h1>Спасибо за внимание!</h1>
-                <p>Мы надеемся, что наш сайт помог вам в подготовке к ЕГЭ по математике.</p>
+                <p>Мы надеемся, что наш сайт помог вам в подготовке к 
+                    <a href="https://fipi.ru/ege" class="ege-link" target="_blank">ЕГЭ</a> 
+                    по математике.</p>
                 <p>Успехов на экзамене! 🎓</p>
             </div>
             <div class="feedback-form">
@@ -149,7 +223,7 @@
                         <input type="email" id="email" placeholder="Email для ответа (необязательно)">
                     </div>
                     <div class="form-group">
-                        <label for="message">Сообщение *</label>
+                        <label for="message">Сообщение</label>
                         <textarea id="message" required placeholder="Напишите ваш отзыв или предложение..."></textarea>
                     </div>
                     <button type="submit">Отправить</button>
@@ -163,6 +237,34 @@
     </footer>
 
     <script>
+        // Ночная тема
+        function toggleTheme() {
+            document.body.classList.toggle('dark-theme');
+            const isDark = document.body.classList.contains('dark-theme');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            updateThemeButton(isDark);
+        }
+        
+        function updateThemeButton(isDark) {
+            const btn = document.getElementById('themeToggle');
+            if (isDark) {
+                btn.textContent = '☀️ Светлая тема';
+            } else {
+                btn.textContent = '🌙 Тёмная тема';
+            }
+        }
+        
+        function applySavedTheme() {
+            const saved = localStorage.getItem('theme');
+            if (saved === 'dark') {
+                document.body.classList.add('dark-theme');
+                updateThemeButton(true);
+            } else {
+                updateThemeButton(false);
+            }
+        }
+        
+        // Форма обратной связи
         document.getElementById('feedbackForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const message = document.getElementById('message').value.trim();
@@ -170,16 +272,21 @@
                 alert('Пожалуйста, введите сообщение.');
                 return;
             }
-            // Здесь можно отправить данные на сервер, но для демонстрации просто покажем сообщение
             const name = document.getElementById('name').value;
             const email = document.getElementById('email').value;
+            
             console.log('Отзыв:', { name, email, message });
-            document.getElementById('feedbackSuccess').textContent = 'Спасибо за ваш отзыв! Он отправлен разработчику.';
+            
+            const successDiv = document.getElementById('feedbackSuccess');
+            successDiv.textContent = '✅ Спасибо за ваш отзыв! Он отправлен разработчику.';
             document.getElementById('feedbackForm').reset();
+            
             setTimeout(() => {
-                document.getElementById('feedbackSuccess').textContent = '';
+                successDiv.textContent = '';
             }, 5000);
         });
+        
+        applySavedTheme();
     </script>
 </body>
 </html>
