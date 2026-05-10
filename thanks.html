@@ -16,7 +16,6 @@
             --accent-hover: #2980b9;
             --red: #e63946;
             --shadow: 0 4px 6px rgba(0,0,0,0.1);
-            --input-border: #ccc;
             --footer-bg: #2c3e50;
             --footer-text: #ffffff;
         }
@@ -32,7 +31,6 @@
             --accent-hover: #c23152;
             --red: #e94560;
             --shadow: 0 4px 6px rgba(0,0,0,0.3);
-            --input-border: #444;
             --footer-bg: #0f3460;
             --footer-text: #e0e0e0;
         }
@@ -98,7 +96,7 @@
             padding: 2rem 1rem;
         }
         .container {
-            max-width: 600px;
+            max-width: 700px;
             margin: 0 auto;
         }
         .thanks-card {
@@ -123,54 +121,6 @@
         .feedback-form h2 {
             color: var(--text);
             margin-bottom: 1rem;
-        }
-        .form-group {
-            margin-bottom: 1rem;
-            text-align: left;
-        }
-        label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: bold;
-            color: var(--text);
-        }
-        input, textarea {
-            width: 100%;
-            padding: 0.8rem;
-            border: 2px solid var(--input-border);
-            border-radius: 5px;
-            font-size: 1rem;
-            transition: border-color 0.3s;
-            background: var(--card-bg);
-            color: var(--text);
-        }
-        input:focus, textarea:focus {
-            border-color: var(--accent);
-            outline: none;
-        }
-        textarea {
-            resize: vertical;
-            min-height: 100px;
-        }
-        button {
-            background: var(--accent);
-            color: white;
-            border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: background 0.3s;
-        }
-        button:hover {
-            background: var(--accent-hover);
-        }
-        .success-message {
-            margin-top: 1rem;
-            color: #27ae60;
-            font-weight: bold;
-            min-height: 24px;
-            text-align: left;
         }
         footer {
             text-align: center;
@@ -212,23 +162,9 @@
             </div>
             <div class="feedback-form">
                 <h2>Обратная связь</h2>
-                <p>Если у вас есть вопросы, предложения или вы нашли ошибку, напишите нам.</p>
-                <form id="feedbackForm">
-                    <div class="form-group">
-                        <label for="name">Ваше имя</label>
-                        <input type="text" id="name" placeholder="Имя (необязательно)">
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" placeholder="Email для ответа (необязательно)">
-                    </div>
-                    <div class="form-group">
-                        <label for="message">Сообщение</label>
-                        <textarea id="message" required placeholder="Напишите ваш отзыв или предложение..."></textarea>
-                    </div>
-                    <button type="submit">Отправить</button>
-                </form>
-                <div id="feedbackSuccess" class="success-message"></div>
+                <p>Помогите улучшить сайт — ваше мнение важно!</p>
+                <script src="https://forms.yandex.ru/_static/embed.js"></script>
+                <iframe src="https://forms.yandex.ru/u/6a00675df47e73870de29242?iframe=1" frameborder="0" name="ya-form-6a00675df47e73870de29242" width="650"></iframe>
             </div>
         </div>
     </main>
@@ -263,28 +199,6 @@
                 updateThemeButton(false);
             }
         }
-        
-        // Форма обратной связи
-        document.getElementById('feedbackForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const message = document.getElementById('message').value.trim();
-            if (!message) {
-                alert('Пожалуйста, введите сообщение.');
-                return;
-            }
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            
-            console.log('Отзыв:', { name, email, message });
-            
-            const successDiv = document.getElementById('feedbackSuccess');
-            successDiv.textContent = '✅ Спасибо за ваш отзыв! Он отправлен разработчику.';
-            document.getElementById('feedbackForm').reset();
-            
-            setTimeout(() => {
-                successDiv.textContent = '';
-            }, 5000);
-        });
         
         applySavedTheme();
     </script>
